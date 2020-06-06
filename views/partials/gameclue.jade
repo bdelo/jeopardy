@@ -40,7 +40,7 @@
           span.glyphicon.glyphicon-ok
   br
   br
-  div.buzz-info(ng-hide="game.round == 'FJ'")
+  div.buzz-info(ng-hide="game.round == 'FJ' || clue.daily_double")
     button.btn-primary.btn-lg(ng-click="resetBuzzer()") Unlock Buzzers
     br
     br
