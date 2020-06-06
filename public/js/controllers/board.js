@@ -15,11 +15,11 @@ angular.module('myApp.controllers').
 
     function buildPlayerScore(player) {
       var playerScore = ""
-      if (player.name) {
+      if (player && player.name) {
         playerScore = '<div class="col-md-4 text-center player-total">' +
           '<div class="player-name">' + player.name +
           '</div><div class="player-score">' +
-          currencyFilter(($scope.game.player_1 && $scope.game.player_1.score) || 0, '$', 0) +
+          currencyFilter((player && player.score) || 0, '$', 0) +
           '</div>' +
           '</div>'
       }
@@ -27,7 +27,7 @@ angular.module('myApp.controllers').
     }
 
     function buildScores() {
-      var output = '<div class="row" hello>'
+      var output = '<div class="row">'
       output = output.concat(buildPlayerScore($scope.game.player_1))
       output = output.concat(buildPlayerScore($scope.game.player_2))
       output = output.concat(buildPlayerScore($scope.game.player_3))
