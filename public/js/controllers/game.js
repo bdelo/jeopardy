@@ -33,6 +33,7 @@ angular.module('myApp.controllers').
 
     $scope.startClue = function (id) {
       console.log('clue:start emit ' + id);
+      socket.emit('buzz:lock', $scope.data.id);
       socket.emit('clue:start', id);
       var modalInstance = $modal.open({
         templateUrl: 'partials/gameclue',

@@ -155,8 +155,12 @@
 }
 
 #buzzer-button {
-  background-color: green;
+  background-color:#0015a0;
   height: 500px;
   width: 80%;
   margin: 10%;
+}
+
+.buzz-info {
+  text-align: center;
 }

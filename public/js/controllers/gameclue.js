@@ -87,6 +87,10 @@ angular.module('myApp.controllers').
       $('#buzzed-player').html('')
     }
 
+    $scope.stump = function () {
+      socket.emit('stump:send');
+    }
+
     socket.on('buzz:success', function (name) {
       $('#buzzed-player').html(name)
     });

@@ -37,8 +37,19 @@ module.exports = function (io) {
       }
     });
 
+    socket.on('buzz:lock', function (id) {
+      console.log('got lock')
+      var placeholderName = '             '
+      datas[id].game.buzzed_player == placeholderName
+      io.emit('buzz:success', placeholderName);
+    });
+
+    socket.on('stump:send', function () {
+
+    });
+
     socket.on('buzz:reset', function (parent_id) {
-      datas[id].game.buzzed_player = null
+      datas[parent_id].game.buzzed_player = null
       io.emit('buzz:reset:success')
     });
 

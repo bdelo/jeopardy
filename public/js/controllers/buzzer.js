@@ -19,11 +19,17 @@ angular.module('myApp.controllers').
       $('#buzzer-button').show();
     }
 
-    socket.on('buzz:success', function (data) {
+    socket.on('buzz:success', function (buzzedName) {
       var buzzerButton = $('#buzzer-button')
-      buzzerButton.css("background-color", "red");
-      buzzerButton.html("Locked");
       buzzerButton.prop('disabled', true);
+
+      if ($('#buzzer-name').html() == buzzedName) {
+        buzzerButton.css("background-color", "green");
+        buzzerButton.html("Buzzed!");
+      } else {
+        buzzerButton.css("background-color", "#c40d0a");
+        buzzerButton.html("Locked");
+      }
     });
 
     socket.on('final:start', function () {
@@ -33,7 +39,7 @@ angular.module('myApp.controllers').
 
     socket.on('buzz:reset:success', function (data) {
       var buzzerButton = $('#buzzer-button')
-      buzzerButton.css("background-color", "green");
+      buzzerButton.css("background-color", "#0015a0");
       buzzerButton.html("Buzz");
       buzzerButton.prop('disabled', false);
     });
