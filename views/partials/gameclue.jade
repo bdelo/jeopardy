@@ -44,9 +44,12 @@
     button.btn-primary.btn-lg(ng-click="resetBuzzer()") Unlock Buzzers
     br
     br
-    div
-      span Buzzed Player: 
+    div.buzzed-player-info
+      span 
         span#buzzed-player
+      div.timer-box
+        span.timer
+  
   
 
   h3(ng-show="game.round == 'FJ'") Answers

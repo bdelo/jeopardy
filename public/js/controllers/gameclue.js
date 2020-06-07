@@ -16,6 +16,9 @@ angular.module('myApp.controllers').
       dd_player: response.game.control_player
     };
 
+    console.log('opened game clue');
+    $('.timer').removeClass('animated')
+
     var value = response.id.split('_');
     $scope.result.value = $scope.result.dd_value = parseInt(value[3]) * (value[1] === 'J' ? 200 : 400);
 
@@ -85,6 +88,7 @@ angular.module('myApp.controllers').
     $scope.resetBuzzer = function () {
       socket.emit('buzz:reset', $scope.parent_id);
       $('#buzzed-player').html('')
+      $('.timer').removeClass('animated')
     }
 
     $scope.stump = function () {
@@ -93,6 +97,7 @@ angular.module('myApp.controllers').
 
     socket.on('buzz:success', function (name) {
       $('#buzzed-player').html(name)
+      $('.timer').addClass('animated')
     });
 
     $scope.ok = function () {

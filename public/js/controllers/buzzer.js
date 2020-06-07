@@ -19,6 +19,18 @@ angular.module('myApp.controllers').
       $('#buzzer-button').show();
     }
 
+    function resetTimer() {
+      $('.timer').removeClass('animated')
+    }
+
+    function startTimer() {
+      $('.timer').addClass('animated')
+    }
+
+    socket.on('clue:start', function (_) {
+      resetTimer();
+    });
+
     socket.on('buzz:success', function (buzzedName) {
       var buzzerButton = $('#buzzer-button')
       buzzerButton.prop('disabled', true);
@@ -26,6 +38,8 @@ angular.module('myApp.controllers').
       if ($('#buzzer-name').html() == buzzedName) {
         buzzerButton.css("background-color", "green");
         buzzerButton.html("Buzzed!");
+        startTimer()
+
       } else {
         buzzerButton.css("background-color", "#c40d0a");
         buzzerButton.html("Locked");

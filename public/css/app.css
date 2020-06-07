@@ -161,6 +161,54 @@
   margin: 10%;
 }
 
+.buzzed-player-info { 
+  height: 70px;
+}
+
+#buzzed-player {
+  font-size: 150%; 
+  height: 50px;
+}
+
+.buzzer {
+  touch-action: manipulation;
+}
+
 .buzz-info {
   text-align: center;
 }
+
+@keyframes load {
+  0% { width: 0; }
+  100% { width: 100%; }
+  80% { width: 100%; }
+}
+
+.timer-box {
+  margin: auto;
+  width: 100%;
+  align-items: center;
+  position: relative;
+  display: flex;
+  height: 40px;
+}
+
+.timer{
+  opacity: 0;
+  margin: auto;
+  background: red;
+  width: 100%;
+  height: 100%;
+}
+
+.buzz-info .timer-box {
+  width: 50%;
+}
+
+.timer.animated {
+  opacity: 1;
+  animation-delay: 6s;
+  animation: load 6s steps(5,end) reverse;
+ -webkit-animation-fill-mode: forwards; 
+}
+
