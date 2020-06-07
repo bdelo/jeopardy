@@ -13,10 +13,13 @@ angular.module('myApp.controllers').
       }
     })
 
-    $scope.submitName = function () {
+    $scope.submitName = function (name) {
       $('#buzzer-name-input').hide();
       $('#buzzer-name').show();
       $('#buzzer-button').show();
+      socket.emit('player:joined',
+        { name: name, id: $scope.data.id }
+      );
     }
 
     function resetTimer() {

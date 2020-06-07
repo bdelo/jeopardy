@@ -17,6 +17,64 @@ module.exports = function (io) {
       io.emit('round:start', data);
     });
 
+    socket.on('player:joined', function (data) {
+      name = data.name
+      id = data.id
+      game = datas[id].game
+
+      if (game) {
+        var playerExists = false
+        if (game.player_1 && game.player_1.name == name) {
+          playerExists = playerExists || true
+        }
+        else if (game.player_2 && game.player_2.name == name) {
+          playerExists = playerExists || true
+        }
+        else if (game.player_3 && game.player_3.name == name) {
+          playerExists = playerExists || true
+        }
+        else if (game.player_4 && game.player_4.name == name) {
+          playerExists = playerExists || true
+        }
+        else if (game.player_5 && game.player_5.name == name) {
+          playerExists = playerExists || true
+        }
+        else if (game.player_6 && game.player_6.name == name) {
+          playerExists = playerExists || true
+        }
+
+
+        if (!playerExists) {
+          if (game.player_1 == null || game.player_1.name == null) {
+            game.player_1 = game.player_1 || {}
+            game.player_1.name = name
+          }
+          else if (game.player_2 == null || game.player_2.name == null) {
+            game.player_2 = game.player_2 || {}
+            game.player_2.name = name
+          }
+          else if (game.player_3 == null || game.player_3.name == null) {
+            game.player_3 = game.player_3 || {}
+            game.player_3.name = name
+          }
+          else if (game.player_4 == null || game.player_4.name == null) {
+            game.player_4 = game.player_4 || {}
+            game.player_4.name = name
+          }
+          else if (game.player_5 == null || game.player_5.name == null) {
+            game.player_5 = game.player_5 || {}
+            game.player_5.name = name
+          }
+          else if (game.player_6 == null || game.player_61.name == null) {
+            game.player_6 = game.player_6 || {}
+            game.player_6.name = name
+          }
+        }
+
+        io.emit('player:joined:success')
+      }
+    });
+
     socket.on('final_wager:submit', function (data) {
       console.log('final_wager:submit ' + data.id + data.wager.name, data.wager.wager_amount);
       datas[id].game.final_wagers.push(data.wager);
