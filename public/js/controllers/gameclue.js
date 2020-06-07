@@ -16,6 +16,7 @@ angular.module('myApp.controllers').
       dd_player: response.game.control_player
     };
 
+    setTimeout(function () { $('.timer').removeClass('animated'); }, 30);
     console.log('opened game clue');
     $('.timer').removeClass('animated')
 
