@@ -5,7 +5,7 @@ socket.on('final_wager:submit:done', function (data) {
 });
 
 socket.on('final:submit:done', function (data) {
-  $('#final-answers').append(data.name + " $" + data.wager + " -  " + data.answer + "</br>")
+  $('#final-answers').append(data.name + " -  " + data.answer + " - $" + data.wager + "</br>")
 });
 
 function wager() {
