@@ -8,7 +8,7 @@ var id, datas = {};
 
 let
   redis = require('redis'),
-  client = redis.createClient(process.env.REDISCLOUD_URL);
+  client = redis.createClient('')//process.env.REDISCLOUD_URL);
 
 client.on('error', function (err) {
   console.log('Redis error: ' + err);

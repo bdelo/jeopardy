@@ -12,10 +12,6 @@ var request = require('request');
 var cheerio = require('cheerio');
 var _ = require('lodash');
 
-function exportIndexChunk(error, html) {
-
-}
-
 function exportIndex(req, res, next) {
   return function (error, response, html) {
     if (client.connected) {
