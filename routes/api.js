@@ -1,9 +1,8 @@
 /*
  * Serve JSON to our AngularJS client
  */
-let
-  redis = require('redis'),
-  client = redis.createClient(process.env.REDISCLOUD_URL);
+var redis = require('redis');
+var client = redis.createClient(process.env.REDISCLOUD_URL, { no_ready_check: true });
 
 client.on('error', function (err) {
   console.log('Redis error: ' + err);
