@@ -6,7 +6,7 @@ let
   /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
   client = redis.createClient({
     port: 6379,               // replace with your port
-    host: process.env.REDIS_HOST || '127.0.0.1',        // replace with your hostanme or IP address
+    host: process.env.REDISCLOUD_URL || '127.0.0.1',        // replace with your hostanme or IP address
     password: process.env.REDIS_PASSWORD || '',    // replace with your password
   });
 
