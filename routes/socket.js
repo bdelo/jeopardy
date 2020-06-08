@@ -7,7 +7,8 @@ var jsonfile = require('jsonfile');
 var id, datas = {};
 
 var redis = require('redis');
-var client = redis.createClient(process.env.REDISCLOUD_URL, { no_ready_check: true });
+//var client = redis.createClient(process.env.REDISCLOUD_URL, { no_ready_check: true });
+var client = redis.createClient();
 
 client.on('error', function (err) {
   console.log('Redis error: ' + err);
