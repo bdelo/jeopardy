@@ -2,11 +2,12 @@ nav.navbar.navbar-default.navbar-fixed-top
   .container
     .navbar-header
       span.navbar-brand
-        span(ng-show='game.round == "DJ"') Double
-        span(ng-show='game.round == "FJ"') Final
-        |  Jeopardy! 
-        a(target='_blank', ng-href='/#/board') Board 
-        a(target='_blank', ng-href='/#/buzzer/{{data.id}}') Buzzer
+        div 
+          a.navbar-brand-name(ng-href='/#/seasons') Jeopardy! 
+        div.navbar-brand-link
+          a(target='_blank', ng-href='/#/board') Board 
+        div.navbar-brand-link 
+          a(target='_blank', ng-href='/#/buzzer/{{data.id}}') Buzzer
     .collapse.navbar-collapse
       each i in [1, 2, 3, 4, 5, 6]
         form.navbar-form.navbar-left

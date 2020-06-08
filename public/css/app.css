@@ -133,6 +133,26 @@
   width: 200px;
 }
 
+.navbar-brand-name {
+  text-decoration: none;
+  color: #777
+}
+
+.navbar-brand-name:hover {
+  text-decoration: none;
+  color: #777
+}
+
+.navbar-brand-link {
+  margin-top: 5px;
+  font-size: 70%;
+  text-align: center;
+}
+
+.navbar-brand-link a:hover {
+  text-decoration: none;
+}
+
 .player-total {
   padding: 20px;
 }
