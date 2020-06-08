@@ -6,6 +6,14 @@ var _ = require('lodash');
 var jsonfile = require('jsonfile');
 var id, datas = {};
 
+var redis = require('redis');
+var client = redis.createClient(process.env.REDISCLOUD_URL, { no_ready_check: true });
+
+client.on('error', function (err) {
+  console.log('Redis error: ' + err);
+});
+const EPISODES_PLAYED_KEY = 'episodes-played'
+
 module.exports = function (io) {
   return function (socket) {
     socket.on('game:start', function (data) {
@@ -135,6 +143,7 @@ module.exports = function (io) {
 
         var file = 'games/' + id + '-' + new Date().getTime() + '.json';
         jsonfile.writeFileSync(file, data, { spaces: 2 });
+        client.hset(EPISODES_PLAYED_KEY, id, true)
       }
       datas[id].game = data;
       io.emit('round:start', datas[id]);
@@ -165,5 +174,9 @@ module.exports = function (io) {
       datas[id].game = data;
       socket.broadcast.emit('clue:end', data);
     });
+
+    socket.on('game:reset', function (id) {
+      client.hdel(EPISODES_PLAYED_KEY, id);
+    })
   };
 };

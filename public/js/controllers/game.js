@@ -102,6 +102,7 @@ angular.module('myApp.controllers').
     }
 
     $scope.resetGame = function () {
+      socket.emit('game:reset', $scope.data.id)
       $scope.game = {
         control_player: 'player_1',
         final_wagers: [],

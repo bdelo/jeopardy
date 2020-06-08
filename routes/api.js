@@ -1,33 +1,68 @@
 /*
  * Serve JSON to our AngularJS client
  */
+var redis = require('redis');
+var client = redis.createClient(process.env.REDISCLOUD_URL, { no_ready_check: true });
 
+client.on('error', function (err) {
+  console.log('Redis error: ' + err);
+});
 var request = require('request');
 var cheerio = require('cheerio');
 var _ = require('lodash');
 
 function exportIndex(req, res, next) {
   return function (error, response, html) {
-    if (!error) {
-      var $ = cheerio.load(html), result = [];
-      $('#content table tr').each(function () {
-        var data = $(this), row = [];
-        data.children().each(function (i, element) {
-          if (i == 0) {
-            var link = $('a', element).first().attr('href');
-            link = link.substring(link.indexOf('=') + 1, link.length)
-            row.push(link);
-          }
-          row.push($(element).text().trim());
+    if (client.connected) {
+      client.hgetall('episodes-played', function (err, redisResult) {
+        if (!error) {
+          var $ = cheerio.load(html), result = [];
+          $('#content table tr').each(function () {
+            var data = $(this), row = [];
+            data.children().each(function (i, element) {
+              if (i == 0) {
+                var link = $('a', element).first().attr('href');
+                link = link.substring(link.indexOf('=') + 1, link.length)
+                row.push(link);
+              }
+              row.push($(element).text().trim());
+            });
+            redisResult = redisResult || {}
+            row.push(redisResult[row[0]])
+            result.push(_.zipObject(['id', 'name', 'description', 'note', 'played'], row));
+          });
+
+          res.json(result);
+        }
+        else {
+          next(error);
+        }
+      }) //hgetall
+
+    } else { //redis not connected
+      if (!error) {
+        var $ = cheerio.load(html), result = [];
+        $('#content table tr').each(function () {
+          var data = $(this), row = [];
+          data.children().each(function (i, element) {
+            if (i == 0) {
+              var link = $('a', element).first().attr('href');
+              link = link.substring(link.indexOf('=') + 1, link.length)
+              row.push(link);
+            }
+            row.push($(element).text().trim());
+          });
+          row.push(false)
+
+          result.push(_.zipObject(['id', 'name', 'description', 'note', 'played'], row));
         });
 
-        result.push(_.zipObject(['id', 'name', 'description', 'note'], row));
-      });
+        res.json(result);
+      }
+      else {
+        next(error);
+      }
 
-      res.json(result);
-    }
-    else {
-      next(error);
     }
   };
 }
