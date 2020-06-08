@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "async-redis": "^1.1.7",
     "body-parser": "^1.13.3",
     "bower": "1.8.8",
     "cheerio": "^0.22.0",
