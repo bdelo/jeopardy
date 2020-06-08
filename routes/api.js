@@ -28,6 +28,7 @@ function exportIndex(req, res, next) {
               }
               row.push($(element).text().trim());
             });
+            redisResult = redisResult || {}
             row.push(redisResult[row[0]])
             result.push(_.zipObject(['id', 'name', 'description', 'note', 'played'], row));
           });
