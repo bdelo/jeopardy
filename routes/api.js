@@ -1,33 +1,78 @@
 /*
  * Serve JSON to our AngularJS client
  */
+let
+  redis = require('redis'),
+  /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
+  client = redis.createClient({
+    port: 6379,               // replace with your port
+    host: process.env.REDIS_HOST || '127.0.0.1',        // replace with your hostanme or IP address
+    password: process.env.REDIS_PASSWORD || '',    // replace with your password
+  });
 
+client.on('error', function (err) {
+  console.log('Redis error: ' + err);
+  console.log(client)
+});
 var request = require('request');
 var cheerio = require('cheerio');
 var _ = require('lodash');
 
+function exportIndexChunk(error, html) {
+
+}
+
 function exportIndex(req, res, next) {
   return function (error, response, html) {
-    if (!error) {
-      var $ = cheerio.load(html), result = [];
-      $('#content table tr').each(function () {
-        var data = $(this), row = [];
-        data.children().each(function (i, element) {
-          if (i == 0) {
-            var link = $('a', element).first().attr('href');
-            link = link.substring(link.indexOf('=') + 1, link.length)
-            row.push(link);
-          }
-          row.push($(element).text().trim());
+    if (client.connected) {
+      client.hgetall('episodes-played', function (err, redisResult) {
+        if (!error) {
+          var $ = cheerio.load(html), result = [];
+          $('#content table tr').each(function () {
+            var data = $(this), row = [];
+            data.children().each(function (i, element) {
+              if (i == 0) {
+                var link = $('a', element).first().attr('href');
+                link = link.substring(link.indexOf('=') + 1, link.length)
+                row.push(link);
+              }
+              row.push($(element).text().trim());
+            });
+            row.push(redisResult[row[0]])
+            result.push(_.zipObject(['id', 'name', 'description', 'note', 'played'], row));
+          });
+
+          res.json(result);
+        }
+        else {
+          next(error);
+        }
+      }) //hgetall
+
+    } else { //redis not connected
+      if (!error) {
+        var $ = cheerio.load(html), result = [];
+        $('#content table tr').each(function () {
+          var data = $(this), row = [];
+          data.children().each(function (i, element) {
+            if (i == 0) {
+              var link = $('a', element).first().attr('href');
+              link = link.substring(link.indexOf('=') + 1, link.length)
+              row.push(link);
+            }
+            row.push($(element).text().trim());
+          });
+          row.push(false)
+
+          result.push(_.zipObject(['id', 'name', 'description', 'note', 'played'], row));
         });
 
-        result.push(_.zipObject(['id', 'name', 'description', 'note'], row));
-      });
+        res.json(result);
+      }
+      else {
+        next(error);
+      }
 
-      res.json(result);
-    }
-    else {
-      next(error);
     }
   };
 }

@@ -6,6 +6,20 @@ var _ = require('lodash');
 var jsonfile = require('jsonfile');
 var id, datas = {};
 
+let
+  redis = require('redis'),
+  /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
+  client = redis.createClient({
+    port: 6379,               // replace with your port
+    host: process.env.REDIS_HOST || '127.0.0.1',        // replace with your hostanme or IP address
+    password: process.env.REDIS_PASSWORD || '',    // replace with your password
+  });
+
+client.on('error', function (err) {
+  console.log('Redis error: ' + err);
+});
+const EPISODES_PLAYED_KEY = 'episodes-played'
+
 module.exports = function (io) {
   return function (socket) {
     socket.on('game:start', function (data) {
@@ -77,6 +91,7 @@ module.exports = function (io) {
 
         var file = 'games/' + id + '-' + new Date().getTime() + '.json';
         jsonfile.writeFileSync(file, data, { spaces: 2 });
+        client.hset(EPISODES_PLAYED_KEY, id, true)
       }
       datas[id].game = data;
       io.emit('round:start', datas[id]);
@@ -107,5 +122,9 @@ module.exports = function (io) {
       datas[id].game = data;
       socket.broadcast.emit('clue:end', data);
     });
+
+    socket.on('game:reset', function (id) {
+      client.hdel(EPISODES_PLAYED_KEY, id);
+    })
   };
 };
