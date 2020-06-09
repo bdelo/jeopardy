@@ -6,7 +6,7 @@
   height: 100%;
   background: #0015a0;
   color: #ffffff;
-  font-family: 'Fjalla One', sans-serif;
+  font-family: "Fjalla One", sans-serif;
   text-shadow: 4px 4px #000000;
 }
 
@@ -70,7 +70,7 @@
 .board-modal-open .modal-content {
   background: #0015a0;
   color: #ffffff;
-  font-family: 'Korinna', 'Kadwa', serif;
+  font-family: "Korinna", "Kadwa", serif;
   font-size: 400%;
   font-weight: 600;
   text-shadow: 4px 4px #000000;
@@ -95,34 +95,31 @@
   left: 3%;
   right: 3%;
   font-size: 50%;
-  background: linear-gradient(
-      rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0.7)
-    ),
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
 }
 
 .player-name {
-  font-family: 'Korinna', 'Kadwa', serif;
+  font-family: "Korinna", "Kadwa", serif;
   text-transform: uppercase;
 }
 
 .player-score {
-  font-family: 'Fjalla One', sans-serif;
+  font-family: "Fjalla One", sans-serif;
 }
 
 .video-wrapper {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
 }
 
 .video-wrapper iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .panel {
@@ -135,12 +132,12 @@
 
 .navbar-brand-name {
   text-decoration: none;
-  color: #777
+  color: #777;
 }
 
 .navbar-brand-name:hover {
   text-decoration: none;
-  color: #777
+  color: #777;
 }
 
 .navbar-brand-link {
@@ -163,30 +160,31 @@
 }
 
 .buzzer input {
-  width: 100%; 
+  width: 100%;
   height: 200px;
-  line-height: 200px; font-size: 80px; 
+  line-height: 200px;
+  font-size: 80px;
 }
-  
-.buzzer .btn-lg { 
+
+.buzzer .btn-lg {
   height: 200px;
   width: 500px;
   font-size: 50px;
 }
 
 #buzzer-button {
-  background-color:#0015a0;
+  background-color: #0015a0;
   height: 500px;
   width: 80%;
   margin: 10%;
 }
 
-.buzzed-player-info { 
+.buzzed-player-info {
   height: 70px;
 }
 
 #buzzed-player {
-  font-size: 150%; 
+  font-size: 150%;
   height: 50px;
 }
 
@@ -199,9 +197,12 @@
 }
 
 @keyframes load {
-  0% { width: 0; }
-  100% { width: 100%; }
-  80% { width: 100%; }
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
 .timer-box {
@@ -213,7 +214,7 @@
   height: 40px;
 }
 
-.timer{
+.timer {
   opacity: 0;
   margin: auto;
   background: red;
@@ -227,7 +228,7 @@
 
 .timer.animated {
   opacity: 1;
-  animation-delay: 6s;
-  animation: load 6s steps(5,end) reverse;
- -webkit-animation-fill-mode: forwards; 
+  animation: load 5s steps(5, end) reverse;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-delay: 1s;
 }
