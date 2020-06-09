@@ -6,10 +6,13 @@
       th Name
       th Description
       th Note 
+      th Played By
     tr(ng-repeat='episode in data')
       td
-        span(ng-show="episode.played").glyphicon.glyphicon-ok
+        span(ng-attr-title="episode.playedIfno" ng-show="episode.playedInfo").glyphicon.glyphicon-ok
       td
         a(ui-sref='game({ id: episode.id })') {{ episode.name }}
       td {{episode.description}}
       td {{episode.note}}
+      td {{episode.playedInfo}}
+        
