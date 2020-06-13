@@ -16,6 +16,9 @@
     each i in [1, 2, 3, 4, 5, 6]
       .col-md-4.text-center(ng-show="game.player_#{i}.name")
         h4 {{ game.player_#{i}.name || 'Player #{i}' }}
+        div.final-player-info
+          div(ng-if="game.round == 'FJ'") Score: ${{ game.player_#{i}.final_score || game.player_#{i}.score }}
+          div(ng-if="game.round == 'FJ'") Wager: ${{ game.player_#{i}.fj_wager.toLocaleString() }}
         .btn-group
           button.btn.btn-lg(ng-click='setResult(#{i}, false)', ng-class="{'btn-default':!result.player_#{i}.wrong, 'btn-danger':result.player_#{i}.wrong}")
             span.glyphicon.glyphicon-remove

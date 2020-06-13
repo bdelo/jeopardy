@@ -24,6 +24,22 @@ angular.module('myApp.controllers').
     $scope.result.value = $scope.result.dd_value = parseInt(value[3]) * (value[1] === 'J' ? 200 : 400);
 
     $scope.setResult = function (num, correct) {
+      if ($scope.game.round == 'FJ') {
+        if (num == 1) {
+          $scope.game.player_1.final_score = correct ? $scope.game.player_1.score + $scope.game.player_1.fj_wager : $scope.game.player_1.score - $scope.game.player_1.fj_wager
+        } else if (num == 2) {
+          $scope.game.player_2.final_score = correct ? $scope.game.player_2.score + $scope.game.player_2.fj_wager : $scope.game.player_2.score - $scope.game.player_2.fj_wager
+        } else if (num == 3) {
+          $scope.game.player_3.final_score = correct ? $scope.game.player_3.score + $scope.game.player_3.fj_wager : $scope.game.player_3.score - $scope.game.player_3.fj_wager
+        } else if (num == 4) {
+          $scope.game.player_4.final_score = correct ? $scope.game.player_4.score + $scope.game.player_4.fj_wager : $scope.game.player_4.score - $scope.game.player_4.fj_wager
+        } else if (num == 5) {
+          $scope.game.player_5.final_score = correct ? $scope.game.player_5.score + $scope.game.player_5.fj_wager : $scope.game.player_5.score - $scope.game.player_5.fj_wager
+        } else if (num == 6) {
+          $scope.game.player_6.final_score = correct ? $scope.game.player_6.score + $scope.game.player_6.fj_wager : $scope.game.player_6.score - $scope.game.player_6.fj_wager
+        }
+      }
+
       var key = 'player_' + num;
       $scope.result[key][correct ? 'right' : 'wrong'] = !$scope.result[key][correct ? 'right' : 'wrong'];
       $scope.result[key][correct ? 'wrong' : 'right'] = undefined;
@@ -36,35 +52,35 @@ angular.module('myApp.controllers').
           $scope.result.player_5.right = undefined;
           $scope.result.player_6.right = undefined;
         }
-        else if (num === 2) {
+        else if (num === 2 && response.id !== 'clue_FJ') {
           $scope.result.player_1.right = undefined;
           $scope.result.player_3.right = undefined;
           $scope.result.player_4.right = undefined;
           $scope.result.player_5.right = undefined;
           $scope.result.player_6.right = undefined;
         }
-        else if (num === 3) {
+        else if (num === 3 && response.id !== 'clue_FJ') {
           $scope.result.player_1.right = undefined;
           $scope.result.player_2.right = undefined;
           $scope.result.player_4.right = undefined;
           $scope.result.player_5.right = undefined;
           $scope.result.player_6.right = undefined;
         }
-        else if (num === 4) {
+        else if (num === 4 && response.id !== 'clue_FJ') {
           $scope.result.player_1.right = undefined;
           $scope.result.player_2.right = undefined;
           $scope.result.player_3.right = undefined;
           $scope.result.player_5.right = undefined;
           $scope.result.player_6.right = undefined;
         }
-        else if (num === 5) {
+        else if (num === 5 && response.id !== 'clue_FJ') {
           $scope.result.player_1.right = undefined;
           $scope.result.player_2.right = undefined;
           $scope.result.player_4.right = undefined;
           $scope.result.player_3.right = undefined;
           $scope.result.player_6.right = undefined;
         }
-        else if (num === 6) {
+        else if (num === 6 && response.id !== 'clue_FJ') {
           $scope.result.player_1.right = undefined;
           $scope.result.player_2.right = undefined;
           $scope.result.player_4.right = undefined;
