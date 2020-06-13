@@ -171,9 +171,14 @@
   width: 500px;
   font-size: 50px;
 }
+#buzzer-lock-warning {
+  height: 30px;
+  color: red;
+  text-align: center;
+}
 
 #buzzer-button {
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 50px;
   background-color: #0015a0;
   height: 500px;

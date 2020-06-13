@@ -10,6 +10,7 @@ var id,
 const MongoClient = require("mongodb").MongoClient;
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
 const dbName = process.env.MONGO_DB || "mydb";
+const locked = "LOCKED"
 
 module.exports = function (io) {
   return function (socket) {
@@ -42,17 +43,18 @@ module.exports = function (io) {
       if (datas[id].game.buzzed_player == null) {
         datas[id].game.buzzed_player = data.name;
         io.emit("buzz:success", data.name);
+      } else {
+        io.emit("buzz:fail", data.name)
       }
     });
 
     socket.on("buzz:lock", function (id) {
       console.log("got lock");
-      var placeholderName = "             ";
-      datas[id].game.buzzed_player == placeholderName;
-      io.emit("buzz:success", placeholderName);
+      datas[id].game.buzzed_player = locked;
+      io.emit("buzz:success", locked);
     });
 
-    socket.on("stump:send", function () {});
+    socket.on("stump:send", function () { });
 
     socket.on("buzz:reset", function (parent_id) {
       datas[parent_id].game.buzzed_player = null;

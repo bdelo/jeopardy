@@ -31,9 +31,25 @@ angular.module('myApp.controllers').
       resetTimer();
     });
 
+    socket.on('buzz:fail', function (playerName) {
+      if ($('#buzzer-name').html() == playerName) {
+        lockBuzzer();
+      }
+    });
+
+    function lockBuzzer() {
+      $('#buzzer-lock-warning').html('Buzzer Disabled!')
+      $('#buzzer-button').prop('disabled', true)
+
+      setTimeout(function () {
+        $('#buzzer-lock-warning').html(' ')
+        $('#buzzer-button').prop('disabled', false)
+      }, 250)
+    }
+
     socket.on('buzz:success', function (buzzedName) {
       var buzzerButton = $('#buzzer-button')
-      buzzerButton.prop('disabled', true);
+      //buzzerButton.prop('disabled', true);
 
       if ($('#buzzer-name').html() == buzzedName) {
         buzzerButton.css("background-color", "green");
@@ -55,7 +71,7 @@ angular.module('myApp.controllers').
       var buzzerButton = $('#buzzer-button')
       buzzerButton.css("background-color", "#0015a0");
       buzzerButton.html("Buzz");
-      buzzerButton.prop('disabled', false);
+      //buzzerButton.prop('disabled', false);
     });
 
     $scope.buzz = function (name) {

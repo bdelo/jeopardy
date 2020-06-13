@@ -6,7 +6,8 @@ div.buzzer
       label Name:
       input#name.form-control(type='text', placeholder='Your Name' ng-model='name')
     button.btn-lg.btn-primary(ng-click="submitName()") Submit
-  
+    
+  h1#buzzer-lock-warning
   button#buzzer-button.btn-primary.btn-lg(hidden='true' ng-click="buzz(name)") Buzz
   
   div.timer-box
