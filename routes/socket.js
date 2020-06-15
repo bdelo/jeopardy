@@ -18,6 +18,7 @@ module.exports = function (io) {
       console.log("game:start " + data.data.id);
       id = data.data.id;
       datas[id] = data;
+      datas.current_game = id
       data.game.round = "J";
       data.buzzed_player = "temp";
       io.emit("round:start", data);
@@ -88,6 +89,8 @@ module.exports = function (io) {
       } else if (data.round === "FJ") {
         data.round = "end";
 
+        datas.current_game = null;
+
         var file = "games/" + id + "-" + new Date().getTime() + ".json";
         jsonfile.writeFileSync(file, data, { spaces: 2 });
 
@@ -131,6 +134,10 @@ module.exports = function (io) {
       console.log("board:init");
       socket.emit("board:init", datas[id]);
     });
+
+    socket.on("buzzer:init", function () {
+      socket.emit("buzzer:init", datas[datas.current_game])
+    })
 
     socket.on("game:init", function (data) {
       console.log("game:init " + data);

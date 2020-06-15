@@ -53,18 +53,10 @@ angular.module('myApp', [
         templateUrl: 'partials/board',
         controller: 'BoardCtrl'
       }).
-      state('buzzer-select', {
-
-      }).
       state('buzzer', {
-        url: '/buzzer/:id',
+        url: '/buzzer',
         templateUrl: 'partials/buzzer',
         controller: 'BuzzerCtrl',
-        resolve: {
-          response: function ($http, $stateParams) {
-            return $http.get('/api/games/' + $stateParams.id);
-          }
-        }
       }).
       state('final', {
         url: '/final/:id',

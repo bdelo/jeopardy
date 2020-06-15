@@ -1,5 +1,8 @@
-div.buzzer
-  div#buzzer-name(hidden="true") {{name}}
+div.buzzer-warning(ng-hide="data.id") Please wait until the host starts a game, then refresh this page.
+
+div.buzzer(ng-show="data.id")
+  div Game \#{{ data.id }}
+  div#buzzer-name(hidden="true") {{name}} 
     
   span#buzzer-name-input
     div.form-group

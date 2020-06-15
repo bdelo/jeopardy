@@ -1,14 +1,13 @@
 'use strict';
 
 angular.module('myApp.controllers').
-  controller('BuzzerCtrl', function ($scope, $modal, response, socket) {
-    $scope.data = response.data;
-    console.log($scope.data)
+  controller('BuzzerCtrl', function ($scope, socket) {
+    socket.emit('buzzer:init');
 
-    socket.emit('game:init', $scope.data.id);
-    socket.on('game:init', function (data) {
-      console.log('game:init ' + !!data);
+    socket.on('buzzer:init', function (data) {
+      console.log('buzzer init')
       if (data) {
+        $scope.data = data.data;
         $scope.game = data.game;
       }
     })
@@ -102,5 +101,4 @@ angular.module('myApp.controllers').
         }
       });
     };
-
   });
