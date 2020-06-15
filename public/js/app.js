@@ -53,6 +53,9 @@ angular.module('myApp', [
         templateUrl: 'partials/board',
         controller: 'BoardCtrl'
       }).
+      state('buzzer-select', {
+
+      }).
       state('buzzer', {
         url: '/buzzer/:id',
         templateUrl: 'partials/buzzer',

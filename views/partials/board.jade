@@ -11,7 +11,8 @@ each k in ['J', 'DJ']
       .col-md-3
         span(ng-show='game.round == "DJ"') Double
         span(ng-show='game.round == "FJ"') Final
-        |  Jeopardy!
+        |  Jeopardy! 
+        span Code: {{data.id}}
     .row.board-row.category-row
       each i in [1, 2, 3, 4, 5, 6]
         .col-md-2.text-center.board-cell.category-cell

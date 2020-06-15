@@ -154,6 +154,10 @@
   padding: 20px;
 }
 
+.clue-answer {
+  color: green;
+}
+
 .buzzer {
   padding: 10%;
   font-size: 50px;
