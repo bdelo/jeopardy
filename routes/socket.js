@@ -40,7 +40,7 @@ module.exports = function (io) {
 
     socket.on("buzz:attempt", function (data) {
       id = data.id;
-      if (datas[id].game.buzzed_player == null) {
+      if (datas[id] && datas[id].game.buzzed_player == null) {
         datas[id].game.buzzed_player = data.name;
         io.emit("buzz:success", data.name);
       } else {
