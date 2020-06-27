@@ -8,6 +8,7 @@
     "cheerio": "^0.22.0",
     "errorhandler": "^1.4.2",
     "express": "^4.17.1",
+    "express-robots-txt": "^0.4.1",
     "http-proxy": "^1.11.1",
     "jade": "~1.11.0",
     "jsonfile": "^2.2.1",
