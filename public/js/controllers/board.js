@@ -84,9 +84,36 @@ angular.module('myApp.controllers').
       });
     };
 
+    var finalModalInstance;
+    function openFinalModal(playerName, score, wager, answer) {
+      if (modalInstance || finalModalInstance) {
+        modalInstance.close();
+        finalModalInstance.close();
+      }
+
+      finalModalInstance = $modal.open({
+        templateUrl: 'partials/finalanswer',
+        controller: 'FinalAnswerCtrl',
+        backdrop: 'static',
+        size: 'lg',
+        openedClass: 'board-modal-open',
+        resolve: {
+          response: function () {
+            return {
+              playerName: playerName,
+              score: score,
+              wager: wager,
+              answer: answer
+            };
+          }
+        }
+      });
+    };
+
     socket.on('clue:start', function (data) {
       console.log('clue:start ' + data);
-      openModal(data);
+      //openModal(data);
+      openFinalModal('bobby', 100, 100, 'foobar');
     });
 
     socket.on('clue:end', function (data) {
