@@ -7,10 +7,16 @@ var jsonfile = require("jsonfile");
 var id,
   datas = {};
 
-const MongoClient = require("mongodb").MongoClient;
-const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
-const dbName = process.env.MONGO_DB || "mydb";
-const locked = "LOCKED"
+const { Client } = require("pg");
+
+const pgClient = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
+const locked = "LOCKED";
 
 module.exports = function (io) {
   return function (socket) {
@@ -18,7 +24,7 @@ module.exports = function (io) {
       console.log("game:start " + data.data.id);
       id = data.data.id;
       datas[id] = data;
-      datas.current_game = id
+      datas.current_game = id;
       data.game.round = "J";
       data.buzzed_player = "temp";
       io.emit("round:start", data);
@@ -45,7 +51,7 @@ module.exports = function (io) {
         datas[id].game.buzzed_player = data.name;
         io.emit("buzz:success", data.name);
       } else {
-        io.emit("buzz:fail", data.name)
+        io.emit("buzz:fail", data.name);
       }
     });
 
@@ -55,7 +61,7 @@ module.exports = function (io) {
       io.emit("buzz:success", locked);
     });
 
-    socket.on("stump:send", function () { });
+    socket.on("stump:send", function () {});
 
     socket.on("buzz:reset", function (parent_id) {
       datas[parent_id].game.buzzed_player = null;
@@ -94,35 +100,13 @@ module.exports = function (io) {
         var file = "games/" + id + "-" + new Date().getTime() + ".json";
         jsonfile.writeFileSync(file, data, { spaces: 2 });
 
-        MongoClient.connect(url, function (err, db) {
+        pgClient.connect();
+        pgClient.query("", (err, db) => {
           if (err) {
-            console.log("Mongo error: " + err);
+            console.log("pg error: " + err);
           } else {
-            var dbo = db.db(dbName);
-            var players = [
-              data.player_1,
-              data.player_2,
-              data.player_3,
-              data.player_4,
-              data.player_5,
-              data.player_6,
-            ];
-            var playerNames = [];
-            players.forEach(function (player) {
-              if (player.name) {
-                playerNames.push(player.name);
-              }
-            });
-            var myobj = {
-              episode_id: id,
-              player_names: playerNames,
-              date: Date(),
-            };
-            dbo.collection("playedgames").insertOne(myobj, function (err, res) {
-              if (err) throw err;
-              console.log("1 document inserted");
-              db.close();
-            });
+            // TODO - write who played this game
+            // insert players here
           }
         });
       }
@@ -136,8 +120,8 @@ module.exports = function (io) {
     });
 
     socket.on("buzzer:init", function () {
-      socket.emit("buzzer:init", datas[datas.current_game])
-    })
+      socket.emit("buzzer:init", datas[datas.current_game]);
+    });
 
     socket.on("game:init", function (data) {
       console.log("game:init " + data);

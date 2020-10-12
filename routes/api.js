@@ -6,96 +6,63 @@ var request = require("request");
 var cheerio = require("cheerio");
 var _ = require("lodash");
 
-const MongoClient = require("mongodb").MongoClient;
-const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
-const dbName = process.env.MONGO_DB || "mydb";
+const { Client } = require("pg");
+
+const pgClient = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 function exportIndex(req, res, next) {
   return function (error, response, html) {
-    MongoClient.connect(url, function (err, db) {
-      if (err) {
-        console.log("Mongo error: " + err);
-        var dbResult = {};
-        if (!error) {
-          var $ = cheerio.load(html),
-            result = [];
-          $("#content table tr").each(function () {
-            var data = $(this),
-              row = [];
-            data.children().each(function (i, element) {
-              if (i == 0) {
-                var link = $("a", element).first().attr("href");
-                link = link.substring(link.indexOf("=") + 1, link.length);
-                row.push(link);
-              }
-              row.push($(element).text().trim());
-            });
-            var playedInfo = Array.from(dbResult[row[0]]).join(", ");
-            row.push(playedInfo);
-            result.push(
-              _.zipObject(
-                ["id", "name", "description", "note", "playedInfo"],
-                row
-              )
-            );
-          });
-          res.json(result);
-        } else {
-          next(error);
-        }
-      } else {
-        var dbo = db.db(dbName);
-        dbo
-          .collection("playedgames")
-          .find({})
-          .toArray(function (err, result) {
-            if (err) {
-              console.log("mongo error: " + err);
-            } else {
-              db.close();
-              dbResult = {};
-              result.forEach(function (r) {
-                if (!dbResult[r.episode_id]) {
-                  dbResult[r.episode_id] = new Set();
-                }
-                names = r.player_names || [];
-                names.forEach(function (name) {
-                  dbResult[r.episode_id].add(name);
-                });
-              });
-            }
+    dbResult = {};
 
-            if (!error) {
-              var $ = cheerio.load(html),
-                result = [];
-              $("#content table tr").each(function () {
-                var data = $(this),
-                  row = [];
-                data.children().each(function (i, element) {
-                  if (i == 0) {
-                    var link = $("a", element).first().attr("href");
-                    link = link.substring(link.indexOf("=") + 1, link.length);
-                    row.push(link);
-                  }
-                  row.push($(element).text().trim());
-                });
-                var playedInfo = Array.from(dbResult[row[0]] || []).join(", ");
-                row.push(playedInfo);
-                result.push(
-                  _.zipObject(
-                    ["id", "name", "description", "note", "playedInfo"],
-                    row
-                  )
-                );
-              });
+    //TODO - pull back who's played this game
+    //pgClient.connect();
+    // pgClient.query("", (err, result) => {
+    //   if (err) {
+    //     console.log("pg error: " + err);
+    //   } else {
+    //     pgClient.end();
+    //     result.forEach(function (r) {
+    //       if (!dbResult[r.episode_id]) {
+    //         dbResult[r.episode_id] = new Set();
+    //       }
+    //       names = r.player_names || [];
+    //       names.forEach(function (name) {
+    //         dbResult[r.episode_id].add(name);
+    //       });
+    //     });
+    //   }
+    // });
 
-              res.json(result);
-            } else {
-              next(error);
-            }
-          });
-      }
-    });
+    if (!error) {
+      var $ = cheerio.load(html),
+        result = [];
+      $("#content table tr").each(function () {
+        var data = $(this),
+          row = [];
+        data.children().each(function (i, element) {
+          if (i == 0) {
+            var link = $("a", element).first().attr("href");
+            link = link.substring(link.indexOf("=") + 1, link.length);
+            row.push(link);
+          }
+          row.push($(element).text().trim());
+        });
+        var playedInfo = Array.from(dbResult[row[0]] || []).join(", ");
+        row.push(playedInfo);
+        result.push(
+          _.zipObject(["id", "name", "description", "note", "playedInfo"], row)
+        );
+      });
+
+      res.json(result);
+    } else {
+      next(error);
+    }
   };
 }
 
