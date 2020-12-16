@@ -1,0 +1,46 @@
+.modal-header
+  h3.modal-title Edit Scores
+.modal-body
+  table(class='edit-scores-table')
+    tr
+      th Player
+      th Score
+    tr(ng-show="game.player_1.name")
+      td {{ game.player_1.name }}
+      td
+        .input-group
+          span.input-group-addon $
+          input(class='score-edit-input' type='number', placeholder='0', ng-model='game.player_1.score')
+    tr(ng-show="game.player_2.name")
+      td {{ game.player_2.name }}        
+      td 
+        .input-group
+          span.input-group-addon $
+          input(class='score-edit-input' type='number', placeholder='0', ng-model='game.player_2.score')
+    tr(ng-show="game.player_3.name")
+      td {{ game.player_3.name }}        
+      td 
+        .input-group
+          span.input-group-addon $
+          input(class='score-edit-input' type='number', placeholder='0', ng-model='game.player_3.score')
+    tr(ng-show="game.player_4.name")
+      td {{ game.player_4.name }}        
+      td 
+        .input-group
+          span.input-group-addon $
+          input(class='score-edit-input' type='number', placeholder='0', ng-model='game.player_4.score')
+    tr(ng-show="game.player_5.name")
+      td {{ game.player_5.name }}        
+      td
+        .input-group
+          span.input-group-addon $ 
+          input(class='score-edit-input' type='number', placeholder='0', ng-model='game.player_5.score')
+    tr(ng-show="game.player_6.name")
+      td {{ game.player_6.name }}        
+      td 
+        .input-group
+          span.input-group-addon $
+          input(class='score-edit-input' type='number', placeholder='0', ng-model='game.player_6.score')
+    
+.modal-footer
+  button.btn.btn-lg.btn-success(type="button", ng-click="done()") Done
