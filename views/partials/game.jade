@@ -17,6 +17,7 @@ nav.navbar.navbar-default.navbar-fixed-top
       ul.nav.navbar-nav.navbar-right
         li
           button.btn.btn-primary.navbar-btn(type='button', ng-click='startGame()', ng-show='!game.round') Start Game
+          button.btn.btn-warning.navbar-btn(type='button' ng-click='editScores()') Edit Scores
           button.btn.btn-primary.navbar-btn(type='button', ng-click='endRound()', ng-show='game.round == "J" || game.round == "DJ" || game.round == "FJ"') End Round
           button.btn.btn-danger.navbar-btn(type='button', ng-click='resetGame()', ng-show='game.round == "end"') Reset Game
 

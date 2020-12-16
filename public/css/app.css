@@ -150,6 +150,18 @@
   text-decoration: none;
 }
 
+.navbar-right button {
+  margin-left: 10px;
+}
+
+.score-edit-input {
+  width: 80px;
+}
+
+.edit-scores-table td,th{
+  padding: 8px;
+}
+
 .player-total {
   padding: 20px;
 }
@@ -163,7 +175,7 @@
   font-size: 50px;
 }
 
-.buzzer-warning { 
+.buzzer-warning {
   padding: 10%;
   font-size: 50px;
 }
