@@ -20,6 +20,10 @@ angular
     socket.on("round:start", function (data) {
       console.log("round:start");
       $scope.game = data.game;
+      if (data.game.round == "J" || data.game.round == "DJ") {
+        var sound = new Audio("/sounds/jeopardy-board-fill.mp3");
+        sound.play();
+      }
     });
 
     $scope.startGame = function () {
