@@ -26,8 +26,10 @@ angular.module('myApp.controllers').
       $('.timer').addClass('animated')
     }
 
-    socket.on('clue:start', function (_) {
+    socket.on('clue:start', function (clueId) {
+      let clue_text = $scope.data[clueId].clue_text
       resetTimer();
+      
     });
 
     socket.on('buzz:fail', function (playerName) {

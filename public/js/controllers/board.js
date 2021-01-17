@@ -73,7 +73,7 @@ angular.module('myApp.controllers').
         openedClass: 'board-modal-open',
         resolve: {
           response: function () {
-            return {
+            ret#urn {
               id: id,
               clue: $scope.data[id],
               game: $scope.game,
