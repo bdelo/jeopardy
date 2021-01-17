@@ -19,6 +19,12 @@ angular
         dd_player: response.game.control_player,
       };
 
+      if (response.clue.daily_double) {
+        var path = "/sounds/daily-double.mp3";
+        var snd = new Audio(path);
+        snd.play();
+      }
+
       setTimeout(function () {
         $(".timer").removeClass("animated");
       }, 30);

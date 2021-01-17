@@ -9,7 +9,6 @@
     em.clue-answer {{ clue.correct_response }}
 
   h1.text-center(ng-show="clue.daily_double && !result.dd_confirm") Daily Double!
-    iframe(ng-if="clue.daily_double" width="420", height="0", src="https://www.youtube.com/embed/YHUYfWp7UPo?autoplay=1&autohide=0&rel=0", frameborder="0", allowfullscreen, style="display:none")
   h2.text-center(ng-if="clue.daily_double && !result.dd_confirm") 
     em Enter the player and wager below, then click Confirm.
 
