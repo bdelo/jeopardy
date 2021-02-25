@@ -273,6 +273,7 @@ th {
 
 .final-board-modal .final-wager {
   font-family: "Bradley Hand";
+  min-height: 120px;
 }
 
 .final-board-modal-header h1 {
@@ -281,4 +282,15 @@ th {
 .final-board-modal h1 {
   padding: 20px;
   font-size: 70px;
+}
+
+.final-amount-container {
+  text-align: center;
+  justify-content: center;
+}
+.final-board-modal .final-amount {
+  border: 10px solid black;
+  width: 380px;
+  position: relative;
+  left: 35%;
 }
