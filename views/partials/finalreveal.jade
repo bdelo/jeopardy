@@ -1,0 +1,7 @@
+.modal-header.final-board-modal-header
+  h1 {{playerInfo.name}}
+.modal-body.final-board-modal
+  h1.final-answer {{playerInfo.fj_answer}}
+  h1.final-wager {{wagerAmount}}
+  hr(ng-if="wagerAmount")
+  h1.final-amount {{finalAmount}}

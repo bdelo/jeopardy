@@ -37,31 +37,40 @@ angular
 
       $scope.setResult = function (num, correct) {
         if ($scope.game.round == "FJ") {
+          var finalScore = 0;
           if (num == 1) {
             $scope.game.player_1.final_score = correct
               ? $scope.game.player_1.score + $scope.game.player_1.fj_wager
               : $scope.game.player_1.score - $scope.game.player_1.fj_wager;
+            finalScore = $scope.game.player_1.final_score
           } else if (num == 2) {
             $scope.game.player_2.final_score = correct
               ? $scope.game.player_2.score + $scope.game.player_2.fj_wager
               : $scope.game.player_2.score - $scope.game.player_2.fj_wager;
+            finalScore = $scope.game.player_2.final_score
           } else if (num == 3) {
             $scope.game.player_3.final_score = correct
               ? $scope.game.player_3.score + $scope.game.player_3.fj_wager
               : $scope.game.player_3.score - $scope.game.player_3.fj_wager;
+            finalScore = $scope.game.player_3.final_score
           } else if (num == 4) {
             $scope.game.player_4.final_score = correct
               ? $scope.game.player_4.score + $scope.game.player_4.fj_wager
               : $scope.game.player_4.score - $scope.game.player_4.fj_wager;
+            finalScore = $scope.game.player_4.final_score
           } else if (num == 5) {
             $scope.game.player_5.final_score = correct
               ? $scope.game.player_5.score + $scope.game.player_5.fj_wager
               : $scope.game.player_5.score - $scope.game.player_5.fj_wager;
+            finalScore = $scope.game.player_5.final_score
           } else if (num == 6) {
             $scope.game.player_6.final_score = correct
               ? $scope.game.player_6.score + $scope.game.player_6.fj_wager
               : $scope.game.player_6.score - $scope.game.player_6.fj_wager;
+            finalScore = $scope.game.player_6.final_scores
           }
+
+          socket.emit("fj:reveal-wager", "player_"+ num, finalScore)
         }
 
         var key = "player_" + num;
@@ -148,6 +157,13 @@ angular
         var path = "/sounds/jeopardy-think.mp3";
         var snd = new Audio(path);
         snd.play();
+      };
+
+      $scope.revealFinal = function (playerId) {
+        var playerId = "player_" + playerId;
+        var playerInfo = $scope.game[playerId];
+        console.log("revealing final for " + playerId);
+        socket.emit("fj:reveal", playerId, playerInfo);
       };
 
       $scope.ok = function () {

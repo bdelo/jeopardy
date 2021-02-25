@@ -147,5 +147,14 @@ module.exports = function (io) {
     socket.on("game:reset", function (id) {
       // TODO - maybe reset mongo
     });
+
+    socket.on("fj:reveal", function (playerId, playerInfo) {
+      socket.broadcast.emit("fj:reveal", playerId, playerInfo);
+      console.log("fj:reveal " + playerId + playerInfo);
+    });
+
+    socket.on("fj:reveal-wager", function (playerId, finalScore) {
+      socket.broadcast.emit("fj:reveal-wager", playerId, finalScore);
+    });
   };
 };
