@@ -18,12 +18,14 @@
         h4 {{ game.player_#{i}.name || 'Player #{i}' }}
         div.final-player-info
           div(ng-if="game.round == 'FJ'") Score: ${{ game.player_#{i}.final_score || game.player_#{i}.score }}
-          div(ng-if="game.round == 'FJ'") Wager: ${{ game.player_#{i}.fj_wager.toLocaleString() }}
-        .btn-group
-          button.btn.btn-lg(ng-click='setResult(#{i}, false)', ng-class="{'btn-default':!result.player_#{i}.wrong, 'btn-danger':result.player_#{i}.wrong}")
-            span.glyphicon.glyphicon-remove
-          button.btn.btn-lg(ng-click='setResult(#{i}, true)', ng-class="{'btn-default':!result.player_#{i}.right, 'btn-success':result.player_#{i}.right}")
-            span.glyphicon.glyphicon-ok
+          input#wager.form-control(ng-if="game.round == 'FJ'" placeholder='Answer' ng-model='game.player_#{i}.fj_answer')
+        span
+          button.btn-primary.btn-lg(ng-if="game.round == 'FJ'" ng-click='revealFinal(#{i})') Reveal
+          .btn-group
+            button.btn.btn-lg(ng-click='setResult(#{i}, false)', ng-class="{'btn-default':!result.player_#{i}.wrong, 'btn-danger':result.player_#{i}.wrong}")
+              span.glyphicon.glyphicon-remove
+            button.btn.btn-lg(ng-click='setResult(#{i}, true)', ng-class="{'btn-default':!result.player_#{i}.right, 'btn-success':result.player_#{i}.right}")
+              span.glyphicon.glyphicon-ok
 
   .row(ng-if='clue.daily_double')
     .col-md-4.text-right

@@ -158,7 +158,8 @@
   width: 80px;
 }
 
-.edit-scores-table td,th{
+.edit-scores-table td,
+th {
   padding: 8px;
 }
 
@@ -260,4 +261,24 @@
   animation: load 5s steps(5, end) reverse;
   -webkit-animation-fill-mode: forwards;
   -webkit-animation-delay: 1s;
+}
+
+.final-board-modal-header {
+  font-family: "Bradley Hand";
+}
+
+.final-board-modal .final-answer {
+  font-family: "Bradley Hand";
+}
+
+.final-board-modal .final-wager {
+  font-family: "Bradley Hand";
+}
+
+.final-board-modal-header h1 {
+  font-size: 60px;
+}
+.final-board-modal h1 {
+  padding: 20px;
+  font-size: 70px;
 }
