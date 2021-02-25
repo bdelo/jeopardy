@@ -278,10 +278,12 @@ th {
 
 .final-board-modal-header h1 {
   font-size: 60px;
+  text-transform: none;
 }
 .final-board-modal h1 {
   padding: 20px;
   font-size: 60px;
+  text-transform: none;
 }
 
 .final-amount-container {
