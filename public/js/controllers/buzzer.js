@@ -43,7 +43,7 @@ angular.module('myApp.controllers').
       setTimeout(function () {
         $('#buzzer-lock-warning').html(' ')
         $('#buzzer-button').prop('disabled', false)
-      }, 500)
+      }, 400)
     }
 
     socket.on('buzz:success', function (buzzedName) {
