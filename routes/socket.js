@@ -27,6 +27,7 @@ module.exports = function (io) {
       datas.current_game = id;
       data.game.round = "J";
       data.buzzed_player = "temp";
+      data.game.previous_buzzers = [];
       io.emit("round:start", data);
     });
 
@@ -49,6 +50,7 @@ module.exports = function (io) {
       id = data.id;
       if (datas[id] && datas[id].game.buzzed_player == null) {
         datas[id].game.buzzed_player = data.name;
+        datas[id].game.previous_buzzers.push(data.name);
         io.emit("buzz:success", data.name);
       } else {
         io.emit("buzz:fail", data.name);
@@ -56,7 +58,6 @@ module.exports = function (io) {
     });
 
     socket.on("buzz:lock", function (id) {
-      console.log("got lock");
       datas[id].game.buzzed_player = locked;
       io.emit("buzz:success", locked);
     });
@@ -65,7 +66,7 @@ module.exports = function (io) {
 
     socket.on("buzz:reset", function (parent_id) {
       datas[parent_id].game.buzzed_player = null;
-      io.emit("buzz:reset:success");
+      io.emit("buzz:reset:success", datas[parent_id].game.previous_buzzers);
     });
 
     socket.on("round:end", function (data) {
@@ -130,6 +131,7 @@ module.exports = function (io) {
 
     socket.on("clue:start", function (data) {
       console.log("clue:start " + data);
+      datas[id].game.previous_buzzers = [];
       socket.broadcast.emit("clue:start", data);
     });
 

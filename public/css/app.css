@@ -1,4 +1,6 @@
 /* app css stylesheet */
+/*@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&display=swap");*/
+@import url("https://fonts.googleapis.com/css2?family=Bad+Script&display=swap");
 
 .jeopardy-board {
   position: absolute;
@@ -264,15 +266,15 @@ th {
 }
 
 .final-board-modal-header {
-  font-family: "Bradley Hand";
+  font-family: "Bad Script", cursive;
 }
 
 .final-board-modal .final-answer {
-  font-family: "Bradley Hand";
+  font-family: "Bad Script", cursive;
 }
 
 .final-board-modal .final-wager {
-  font-family: "Bradley Hand";
+  font-family: "Bad Script", cursive;
   min-height: 120px;
 }
 
