@@ -29,6 +29,7 @@ angular
         $(".timer").removeClass("animated");
       }, 30);
       console.log("opened game clue");
+      console.log($scope.clue);
       $(".timer").removeClass("animated");
 
       var value = response.id.split("_");

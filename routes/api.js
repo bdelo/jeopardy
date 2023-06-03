@@ -81,15 +81,15 @@ function exportRound($, context, r) {
         category_comments: $(".category_comments", data).text(),
         media: $("a", data).length
           ? $("a", data)
-              .map(function (i, element) {
-                return $(this)
-                  .attr("href")
-                  .replace(
-                    "http://www.j-archive.com/",
-                    "http://localhost:3000/"
-                  );
-              })
-              .toArray()
+            .map(function (i, element) {
+              return $(this)
+                .attr("href")
+                .replace(
+                  "http://www.j-archive.com/",
+                  "http://localhost:3000/"
+                );
+            })
+            .toArray()
           : undefined,
       };
     });
@@ -102,16 +102,18 @@ function exportRound($, context, r) {
       header = data.parent().parent().parent().parent().prev();
     }
 
-    var answerHtml = _.trimStart(
-      _.trimEnd($("div", header).attr("onmouseover"), ")"),
-      "toggle("
-    )
-      .split(", ")
-      .slice(2)
-      .join(", ");
-    answerHtml = _.trim(_.trim(answerHtml), "'")
-      .replace('\\"', '"')
-      .replace('\\"', '"');
+
+    var answerHtml = data.parent().parent().parent().find(".correct_response");
+    // var answerHtml = _.trimStart(
+    //   _.trimEnd($("div", header).attr("onclick"), ")"),
+    //   "toggle("
+    // )
+    //   .split(", ")
+    //   .slice(2)
+    //   .join(", ");
+    // answerHtml = _.trim(_.trim(answerHtml), "'")
+    //   .replace('\\"', '"')
+    //   .replace('\\"', '"');
     var link = $(".clue_order_number a", header).attr("href");
     var daily_double = header.find(".clue_value_daily_double").length;
 
@@ -121,19 +123,18 @@ function exportRound($, context, r) {
       triple_stumper: _.includes(answerHtml, "Triple Stumper") || undefined,
       clue_html: data.html(),
       clue_text: data.text(),
-      correct_response: cheerio.load(answerHtml)(".correct_response").text(),
+      correct_response: answerHtml.html(), //answerHtml,//(".correct_response.right").text(),
       media: $("a", data).length
         ? $("a", data)
-            .map(function (i, element) {
-              return $(this)
-                .attr("href")
-                .replace("http://www.j-archive.com/", "http://localhost:3000/");
-            })
-            .toArray()
+          .map(function (i, element) {
+            return $(this)
+              .attr("href")
+              .replace("http://www.j-archive.com/", "http://localhost:3000/");
+          })
+          .toArray()
         : undefined,
     };
   });
-
   return result;
 }
 
