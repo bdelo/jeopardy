@@ -15,7 +15,8 @@ angular
     "ui.bootstrap",
     "ui.router",
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
+    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise("/buzzer");
 
     $stateProvider
